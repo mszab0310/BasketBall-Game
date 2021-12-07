@@ -31,14 +31,25 @@ public class Ball : MonoBehaviour
     {
         _startPosition = _rigidbody2D.position;
         _rigidbody2D.isKinematic = true;
-        
-        for(int i = 0; i < _inputSize; i++)
+
+        int i = 0;
+        /*while(i < _inputSize)
+        {
+            if(delay == false)
+            {
+                Debug.LogError("ball nr " + i);
+                LaunchBall(_directions[i], _launchForces[i]);
+                i++;
+            }
+        }*/
+        LaunchBall(_directions[i], _launchForces[i]);
+        /*for(int i = 0; i < _inputSize; i++)
         {
             Debug.LogError("ball nr " + i);
             StartCoroutine(DelayOnStart());
             //Thread.Sleep(3000);
             LaunchBall(_directions[i], _launchForces[i]);
-        }
+        }*/
     }
 
     private IEnumerator DelayOnStart()
