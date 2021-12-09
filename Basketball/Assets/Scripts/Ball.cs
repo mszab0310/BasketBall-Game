@@ -80,9 +80,9 @@ public class Ball : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         
-        if (collision.gameObject == hoop && _rigidbody2D.position.y > collision.gameObject.transform.position.y)
+        if (collision.gameObject == hoop && _rigidbody2D.position.y > collision.gameObject.transform.position.y && delay == false)
         {
-            Debug.Log("Oy cunt" + _rigidbody2D.position.y +" " + collision.gameObject.transform.position.y);
+            ScoreScript.scoreValue += 1;
         }
         
     }
