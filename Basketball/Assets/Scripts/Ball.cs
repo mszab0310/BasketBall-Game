@@ -15,6 +15,7 @@ public class Ball : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     private Vector3 _lastVelocity;
     private bool delay = false;
+    private bool didScore = false;
     public GameObject hoop;
 
 
@@ -80,9 +81,10 @@ public class Ball : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         
-        if (collision.gameObject == hoop && _rigidbody2D.position.y > collision.gameObject.transform.position.y && delay == false)
+        if (collision.gameObject == hoop && _rigidbody2D.position.y > collision.gameObject.transform.position.y && didScore == false)
         {
             ScoreScript.scoreValue += 1;
+            didScore = true;
         }
         
     }
@@ -97,6 +99,7 @@ public class Ball : MonoBehaviour
 
         _rigidbody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
         delay = false;
+        didScore = false;
     }
 
 
