@@ -105,7 +105,7 @@ public class Ball : MonoBehaviour
     }
 
 
-    public void LaunchBall(Vector2 direction, float launchForce,int index)
+    public void LaunchBall(Vector2 direction, float launchForce, int index)
     {
         _index = index;
         _rigidbody2D.isKinematic = false;
@@ -113,6 +113,11 @@ public class Ball : MonoBehaviour
         _rigidbody2D.constraints = RigidbodyConstraints2D.None;
         _rigidbody2D.AddForce(direction * launchForce);
         delay = true;
+    }
+
+    public int GetIndex()
+    {
+        return _index;
     }
 
     public float GetMinDistanceFromHoop()
