@@ -9,6 +9,7 @@ public class Ball : MonoBehaviour
 {
     [SerializeField] float _launchForce = 200;
     [SerializeField] float _maxDragDistance = 5;
+    public float _timeScale = 1f;
 
     private Vector2 _startPosition;
     private Rigidbody2D _rigidbody2D;
@@ -17,6 +18,8 @@ public class Ball : MonoBehaviour
     private bool delay = false;
     private bool didScore = false;
     public GameObject hoop;
+    private float _distanceFromHoop;
+    private float _minDistanceFromHoop;
 
 
 
@@ -24,6 +27,7 @@ public class Ball : MonoBehaviour
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _minDistanceFromHoop = Vector2.Distance(_rigidbody2D.position, hoop.transform.position);
     }
     // Start is called before the first frame update
     void Start()
@@ -66,6 +70,13 @@ public class Ball : MonoBehaviour
     void Update()
     {
         _lastVelocity = _rigidbody2D.velocity;
+        Time.timeScale = _timeScale;
+        _distanceFromHoop = Vector2.Distance(_rigidbody2D.position, hoop.transform.position);
+        if(_distanceFromHoop < _minDistanceFromHoop)
+        {
+            _minDistanceFromHoop = _distanceFromHoop;
+        }
+        
 
     }
     private void OnCollisionEnter2D(Collision2D collision)
@@ -100,10 +111,11 @@ public class Ball : MonoBehaviour
         _rigidbody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
         delay = false;
         didScore = false;
+        _minDistanceFromHoop = Vector2.Distance(_rigidbody2D.position, hoop.transform.position);
     }
 
 
-    private void LaunchBall(Vector2 _direction, float _launchForce)
+    public void LaunchBall(Vector2 _direction, float _launchForce)
     {
         _rigidbody2D.isKinematic = false;
         _rigidbody2D.constraints = RigidbodyConstraints2D.None;
