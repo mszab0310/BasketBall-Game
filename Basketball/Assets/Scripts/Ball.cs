@@ -20,6 +20,7 @@ public class Ball : MonoBehaviour
     public GameObject hoop;
     private float _distanceFromHoop;
     private float _minDistanceFromHoop;
+    private int _index;
 
     private void Awake()
     {
@@ -83,8 +84,7 @@ public class Ball : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.LogWarning("Trigggerrrrrr");
-        if (collision.gameObject == hoop && _rigidbody2D.position.y > collision.gameObject.transform.position.y && didScore == false)
+        if (collision.gameObject.name.Equals("Hoop") && _rigidbody2D.position.y > collision.gameObject.transform.position.y && didScore == false)
         {
             ScoreScript.scoreValue += 1;
             didScore = true;
@@ -105,9 +105,11 @@ public class Ball : MonoBehaviour
     }
 
 
-    public void LaunchBall(Vector2 direction, float launchForce)
+    public void LaunchBall(Vector2 direction, float launchForce,int index)
     {
+        _index = index;
         _rigidbody2D.isKinematic = false;
+        _launchForce = launchForce;
         _rigidbody2D.constraints = RigidbodyConstraints2D.None;
         _rigidbody2D.AddForce(direction * launchForce);
         delay = true;

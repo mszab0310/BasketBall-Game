@@ -32,7 +32,7 @@ public class BallFactory : MonoBehaviour
         int i = 0;
         foreach (Rigidbody2D ball in balls)
         {
-            ball.GetComponent<Ball>().LaunchBall(_directions[i], _launchForces[i]);
+            ball.GetComponent<Ball>().LaunchBall(_directions[i], _launchForces[i],i);
             i++;
         }
 
