@@ -9,6 +9,7 @@ public class Ball : MonoBehaviour
 {
     [SerializeField] float _launchForce = 200;
     [SerializeField] float _maxDragDistance = 5;
+    public float _timeScale = 1f;
 
     private Vector2 _startPosition;
     private Rigidbody2D _rigidbody2D;
@@ -17,24 +18,24 @@ public class Ball : MonoBehaviour
     private bool delay = false;
     private bool didScore = false;
     public GameObject hoop;
-
-
+    private float _distanceFromHoop;
+    private float _minDistanceFromHoop;
+    private int _index;
 
     private void Awake()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _minDistanceFromHoop = Vector2.Distance(_rigidbody2D.position, hoop.transform.position);
+        _startPosition = _rigidbody2D.position;
+        _rigidbody2D.isKinematic = true;
+        //Debug.Log(Camera.main.GetComponent<EdgeCollider2D>().points[0]);
+        //GetFitness();
     }
     // Start is called before the first frame update
     void Start()
     {
-        _startPosition = _rigidbody2D.position;
-        _rigidbody2D.isKinematic = true;
-    }
 
-    private IEnumerator DelayOnStart()
-    {
-        yield return new WaitForSeconds(5);
     }
 
     private void OnMouseUp()
@@ -66,7 +67,12 @@ public class Ball : MonoBehaviour
     void Update()
     {
         _lastVelocity = _rigidbody2D.velocity;
-
+        Time.timeScale = _timeScale;
+        _distanceFromHoop = Vector2.Distance(_rigidbody2D.position, hoop.transform.position);
+        if (_distanceFromHoop < _minDistanceFromHoop)
+        {
+            _minDistanceFromHoop = _distanceFromHoop;
+        }
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -80,13 +86,12 @@ public class Ball : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        
-        if (collision.gameObject == hoop && _rigidbody2D.position.y > collision.gameObject.transform.position.y && didScore == false)
+        if (collision.gameObject.name.Equals("Hoop") && _rigidbody2D.position.y > collision.gameObject.transform.position.y && didScore == false)
         {
             ScoreScript.scoreValue += 1;
             didScore = true;
         }
-        
+
     }
 
 
@@ -96,19 +101,41 @@ public class Ball : MonoBehaviour
         _rigidbody2D.position = _startPosition;
         _rigidbody2D.isKinematic = true;
         _rigidbody2D.velocity = Vector2.zero;
-
         _rigidbody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
         delay = false;
         didScore = false;
     }
 
 
-    private void LaunchBall(Vector2 _direction, float _launchForce)
+    public void LaunchBall(Vector2 direction, float launchForce, int index)
     {
+        _index = index;
         _rigidbody2D.isKinematic = false;
+        _launchForce = launchForce;
         _rigidbody2D.constraints = RigidbodyConstraints2D.None;
-        _rigidbody2D.AddForce(_direction * _launchForce);
+        _rigidbody2D.AddForce(direction * launchForce);
         delay = true;
+    }
+
+    public int GetIndex()
+    {
+        return _index;
+    }
+
+    public float GetMinDistanceFromHoop()
+    {
+        return _minDistanceFromHoop;
+    }
+
+    public float GetFitness()
+    {
+        float accuracy = 0f;
+        Vector2 leftCollider = Camera.main.GetComponent<EdgeCollider2D>().points[0];
+        Vector2 hoopCollider = new Vector2(hoop.transform.position.x, hoop.transform.position.y);
+        float distance = Vector2.Distance(leftCollider, hoopCollider);
+        accuracy = 100 - _minDistanceFromHoop / distance * 100;
+        int scored = didScore ? 100 : 0;
+        return accuracy * 0.4f + scored * 0.6f;
     }
 
 }

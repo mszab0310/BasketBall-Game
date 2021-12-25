@@ -1,0 +1,77 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using UnityEngine;
+
+public class BallFactory : MonoBehaviour
+{
+    public Rigidbody2D ball;
+    public List<Rigidbody2D> balls;
+    public Ball ballscript;
+    private int _inputSize = 0;
+    private Vector2[] _directions = new Vector2[100];
+    private float[] _launchForces = new float[100];
+    void Start()
+    {
+        ScoreScript.scoreValue = 0;
+        CreateBalls(10);
+        SetLaunch();
+        LaunchBalls(10);
+        StartCoroutine(WaitFiveSeconds());
+    }
+
+    private void CreateBalls(int count)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            balls.Add(Instantiate(ball, new Vector2(ball.transform.position.x, ball.transform.position.y), Quaternion.identity) as Rigidbody2D);
+
+        }
+    }
+
+    private void LaunchBalls(int count)
+    {
+        int i = 0;
+        foreach (Rigidbody2D ball in balls)
+        {
+            ball.GetComponent<Ball>().LaunchBall(_directions[i], _launchForces[i], i);
+            i++;
+        }
+
+    }
+
+    private void SetLaunch()
+    {
+        string path = Directory.GetCurrentDirectory();
+        path += "/Assets/Scripts/input.txt";
+        ReadTextFile(path);
+    }
+
+    private void ReadTextFile(string filePath)
+    {
+        StreamReader streamReader = new StreamReader(filePath);
+        while (!streamReader.EndOfStream)
+        {
+            string input = streamReader.ReadLine();
+            string[] words = input.Split(' ');
+            _directions[_inputSize].x = (float)System.Convert.ToDouble(words[0]);
+            _directions[_inputSize].y = (float)System.Convert.ToDouble(words[1]);
+            _launchForces[_inputSize] = (float)System.Convert.ToDouble(words[2]);
+            //Debug.Log("x: " + _directions[_inputSize].x + " y: " + _directions[_inputSize].y + " force: "
+            //    + _launchForces[_inputSize]);
+            _inputSize++;
+        }
+        streamReader.Close();
+    }
+
+    private IEnumerator WaitFiveSeconds()
+    {
+        yield return new WaitForSeconds(5);
+        foreach (Rigidbody2D ball in balls)
+        {
+            Debug.Log("Ball " + ball.GetComponent<Ball>().GetIndex() + ": " + ball.GetComponent<Ball>().GetMinDistanceFromHoop() +
+                " Fitness: " + ball.GetComponent<Ball>().GetFitness());
+        }
+   
+    }
+}
