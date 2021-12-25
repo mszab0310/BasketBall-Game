@@ -21,24 +21,18 @@ public class Ball : MonoBehaviour
     private float _distanceFromHoop;
     private float _minDistanceFromHoop;
 
-
-
     private void Awake()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _minDistanceFromHoop = Vector2.Distance(_rigidbody2D.position, hoop.transform.position);
+        _startPosition = _rigidbody2D.position;
+        _rigidbody2D.isKinematic = true;
     }
     // Start is called before the first frame update
     void Start()
     {
-        _startPosition = _rigidbody2D.position;
-        _rigidbody2D.isKinematic = true;
-    }
 
-    private IEnumerator DelayOnStart()
-    {
-        yield return new WaitForSeconds(5);
     }
 
     private void OnMouseUp()
@@ -72,12 +66,10 @@ public class Ball : MonoBehaviour
         _lastVelocity = _rigidbody2D.velocity;
         Time.timeScale = _timeScale;
         _distanceFromHoop = Vector2.Distance(_rigidbody2D.position, hoop.transform.position);
-        if(_distanceFromHoop < _minDistanceFromHoop)
+        if (_distanceFromHoop < _minDistanceFromHoop)
         {
             _minDistanceFromHoop = _distanceFromHoop;
         }
-        
-
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -91,13 +83,13 @@ public class Ball : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        Debug.LogWarning("Trigggerrrrrr");
         if (collision.gameObject == hoop && _rigidbody2D.position.y > collision.gameObject.transform.position.y && didScore == false)
         {
             ScoreScript.scoreValue += 1;
             didScore = true;
         }
-        
+
     }
 
 
@@ -107,20 +99,23 @@ public class Ball : MonoBehaviour
         _rigidbody2D.position = _startPosition;
         _rigidbody2D.isKinematic = true;
         _rigidbody2D.velocity = Vector2.zero;
-
         _rigidbody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
         delay = false;
         didScore = false;
-        _minDistanceFromHoop = Vector2.Distance(_rigidbody2D.position, hoop.transform.position);
     }
 
 
-    public void LaunchBall(Vector2 _direction, float _launchForce)
+    public void LaunchBall(Vector2 direction, float launchForce)
     {
         _rigidbody2D.isKinematic = false;
         _rigidbody2D.constraints = RigidbodyConstraints2D.None;
-        _rigidbody2D.AddForce(_direction * _launchForce);
+        _rigidbody2D.AddForce(direction * launchForce);
         delay = true;
+    }
+
+    public float GetMinDistanceFromHoop()
+    {
+        return _minDistanceFromHoop;
     }
 
 }
