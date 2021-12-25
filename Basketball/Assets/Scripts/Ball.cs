@@ -29,6 +29,8 @@ public class Ball : MonoBehaviour
         _minDistanceFromHoop = Vector2.Distance(_rigidbody2D.position, hoop.transform.position);
         _startPosition = _rigidbody2D.position;
         _rigidbody2D.isKinematic = true;
+        //Debug.Log(Camera.main.GetComponent<EdgeCollider2D>().points[0]);
+        //GetFitness();
     }
     // Start is called before the first frame update
     void Start()
@@ -123,6 +125,17 @@ public class Ball : MonoBehaviour
     public float GetMinDistanceFromHoop()
     {
         return _minDistanceFromHoop;
+    }
+
+    public float GetFitness()
+    {
+        float accuracy = 0f;
+        Vector2 leftCollider = Camera.main.GetComponent<EdgeCollider2D>().points[0];
+        Vector2 hoopCollider = new Vector2(hoop.transform.position.x, hoop.transform.position.y);
+        float distance = Vector2.Distance(leftCollider, hoopCollider);
+        accuracy = 100 - _minDistanceFromHoop / distance * 100;
+        int scored = didScore ? 100 : 0;
+        return accuracy * 0.4f + scored * 0.6f;
     }
 
 }

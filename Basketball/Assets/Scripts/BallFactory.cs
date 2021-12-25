@@ -69,7 +69,8 @@ public class BallFactory : MonoBehaviour
         yield return new WaitForSeconds(5);
         foreach (Rigidbody2D ball in balls)
         {
-            Debug.Log("Ball " + ball.GetComponent<Ball>().GetIndex() + ": " + ball.GetComponent<Ball>().GetMinDistanceFromHoop());
+            Debug.Log("Ball " + ball.GetComponent<Ball>().GetIndex() + ": " + ball.GetComponent<Ball>().GetMinDistanceFromHoop() +
+                " Fitness: " + ball.GetComponent<Ball>().GetFitness());
         }
    
     }
