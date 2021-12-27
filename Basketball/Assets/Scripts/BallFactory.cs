@@ -18,6 +18,7 @@ public class BallFactory : MonoBehaviour
         SetLaunch();
         LaunchBalls(10);
         StartCoroutine(WaitFiveSeconds());
+        
     }
 
     private void CreateBalls(int count)
@@ -25,7 +26,7 @@ public class BallFactory : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             balls.Add(Instantiate(ball, new Vector2(ball.transform.position.x, ball.transform.position.y), Quaternion.identity) as Rigidbody2D);
-
+              
         }
     }
 
@@ -57,8 +58,7 @@ public class BallFactory : MonoBehaviour
             _directions[_inputSize].x = (float)System.Convert.ToDouble(words[0]);
             _directions[_inputSize].y = (float)System.Convert.ToDouble(words[1]);
             _launchForces[_inputSize] = (float)System.Convert.ToDouble(words[2]);
-            //Debug.Log("x: " + _directions[_inputSize].x + " y: " + _directions[_inputSize].y + " force: "
-            //    + _launchForces[_inputSize]);
+           
             _inputSize++;
         }
         streamReader.Close();
@@ -66,12 +66,11 @@ public class BallFactory : MonoBehaviour
 
     private IEnumerator WaitFiveSeconds()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(7.5f);
         foreach (Rigidbody2D ball in balls)
         {
             Debug.Log("Ball " + ball.GetComponent<Ball>().GetIndex() + ": " + ball.GetComponent<Ball>().GetMinDistanceFromHoop() +
                 " Fitness: " + ball.GetComponent<Ball>().GetFitness());
         }
-   
     }
 }
