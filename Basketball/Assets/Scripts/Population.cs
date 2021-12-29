@@ -15,6 +15,8 @@ public class Population
     {
         this.populationSize = populationSize;
         this.population = new List<Individual>(populationSize);
+        this.children = new List<Individual>(populationSize / 2);
+        this.parents = new List<Tuple<int, int>>(populationSize / 2);
     }
 
     public void generatePopulation()
@@ -88,6 +90,24 @@ public class Population
             parents.Add(Tuple.Create(daddy, mommy));
         }
         
+    }
+
+    public void MutateChildren()
+    {
+        //Children will have a 25% chance of mutation
+        //if the will mutate, the will have a 50% chance on each genome to mutate
+        float mutate = Random.Range(0f, 1f);
+        if(mutate <= 0.25f)
+        {
+            float genomeMutate = Random.Range(0f, 1f);
+            //TODO
+
+        }
+    }
+
+    private Vector2 MutateDirection(Vector2 direction)
+    {
+        return direction;
     }
 
     public List<Individual> GetChildren()
