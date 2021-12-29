@@ -24,6 +24,7 @@ public class Ball : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log("ball awakens");
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _minDistanceFromHoop = Vector2.Distance(_rigidbody2D.position, hoop.transform.position);
@@ -106,7 +107,7 @@ public class Ball : MonoBehaviour
     {
         _index = index;
         didScore = false;
-        _rigidbody2D.isKinematic = false;
+        this._rigidbody2D.isKinematic = false;
         _launchForce = launchForce;
         _rigidbody2D.constraints = RigidbodyConstraints2D.None;
         _rigidbody2D.AddForce(direction * launchForce);

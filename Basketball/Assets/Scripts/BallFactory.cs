@@ -7,7 +7,7 @@ public class BallFactory : MonoBehaviour
 {
     public Rigidbody2D ball;
     public List<Rigidbody2D> balls;
-    public Ball ballscript;
+    public List<Ball> ballscripts;
     private int _inputSize = 0;
     private Vector2[] _directions = new Vector2[100];
     private float[] _launchForces = new float[100];
@@ -26,6 +26,7 @@ public class BallFactory : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             balls.Add(Instantiate(ball, new Vector2(ball.transform.position.x, ball.transform.position.y), Quaternion.identity) as Rigidbody2D);
+            ballscripts.Add(balls[i].GetComponent<Ball>());
               
         }
     }
@@ -40,7 +41,7 @@ public class BallFactory : MonoBehaviour
         int i = 0;
         foreach (Rigidbody2D ball in balls)
         {
-            ball.GetComponent<Ball>().LaunchBall(_directions[i], _launchForces[i], i);
+            ballscripts[i].LaunchBall(_directions[i], _launchForces[i], i);
             i++;
         }
 
@@ -50,7 +51,7 @@ public class BallFactory : MonoBehaviour
     {
         for(int i = 0; i < populationSize; i++)
         {
-            ball.GetComponent<Ball>().LaunchBall(population[i].getDirection(), population[i].getForce(), i);
+            ballscripts[i].LaunchBall(population[i].getDirection(), population[i].getForce(), i);
         }
     }
 

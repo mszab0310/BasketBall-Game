@@ -136,5 +136,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _launchForce: 200
   _maxDragDistance: 5
-  _timeScale: 1
+  _timeScale: 3
   hoop: {fileID: 104486326432881939, guid: 070def3ef1f00f64f9b96b008c29a6f9, type: 3}

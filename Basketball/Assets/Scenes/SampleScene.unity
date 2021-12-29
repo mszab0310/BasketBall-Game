@@ -442,7 +442,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -476, y: -214}
+  m_AnchoredPosition: {x: -339, y: -184}
   m_SizeDelta: {x: 194, y: 37.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &819556350
@@ -489,13 +489,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1016190307}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 1016190308}
+        m_TargetAssemblyTypeName: Launcher, Assembly-CSharp
+        m_MethodName: StartSimulation
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1076,7 +1076,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ball: {fileID: 320321662381563039, guid: 571805452b0942843ad2a01ca8cc3df3, type: 3}
   balls: []
-  ballscript: {fileID: 0}
+  ballscripts: []
 --- !u!4 &1731632807
 Transform:
   m_ObjectHideFlags: 0
