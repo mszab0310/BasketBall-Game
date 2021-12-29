@@ -20,6 +20,6 @@ public class Launcher : MonoBehaviour
         ScoreScript.scoreValue = 0;
         ballFactoryScript.CreateBalls(population.GetPopulationSize());
         ballFactoryScript.LaunchPopulation(population.GetPopulation(), population.GetPopulationSize());
-        ballFactoryScript.Wait();
+        ballFactoryScript.Wait(population.GetPopulation(),population.GetPopulationSize());
     }
 }

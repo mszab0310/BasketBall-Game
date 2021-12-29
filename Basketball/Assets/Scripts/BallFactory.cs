@@ -11,6 +11,7 @@ public class BallFactory : MonoBehaviour
     private int _inputSize = 0;
     private Vector2[] _directions = new Vector2[100];
     private float[] _launchForces = new float[100];
+    private float[] _fitness;
     void Start()
     {
        /* ScoreScript.scoreValue = 0;
@@ -31,9 +32,9 @@ public class BallFactory : MonoBehaviour
         }
     }
 
-    public void Wait()
+    public void Wait(List<Individual> population, int populationSize)
     {
-        StartCoroutine(WaitFiveSeconds());
+        StartCoroutine(WaitFiveSeconds(population,populationSize));
     }
 
     private void LaunchBalls(int count)
@@ -78,13 +79,14 @@ public class BallFactory : MonoBehaviour
         streamReader.Close();
     }
 
-    private IEnumerator WaitFiveSeconds()
+    private IEnumerator WaitFiveSeconds(List<Individual> population, int populationSize)
     {
         yield return new WaitForSeconds(7.5f);
-        foreach (Rigidbody2D ball in balls)
+        for(int i = 0;i < populationSize;i++)
         {
-            Debug.Log("Ball " + ball.GetComponent<Ball>().GetIndex() + ": " + ball.GetComponent<Ball>().GetMinDistanceFromHoop() +
-                " Fitness: " + ball.GetComponent<Ball>().GetFitness());
+            population[i].setFitness(ballscripts[i].GetFitness());
+            Debug.Log(population[i].getFitness() + " <> " + i);
+            
         }
     }
 }

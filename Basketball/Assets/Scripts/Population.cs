@@ -6,6 +6,7 @@ public class Population
 {
     private int populationSize;
     private List<Individual> population;
+    private List<Individual> children;
 
     public Population(int populationSize)
     {
@@ -45,6 +46,39 @@ public class Population
             return -1; 
         else
             return 0;
+    }
+
+
+    public void Recombinate()
+    {
+        int daddy;
+        int mommy = Random.Range(0,populationSize);
+        do
+        {
+            daddy = Random.Range(0, populationSize);
+        } while ( mommy != daddy);
+        // [ (x,y), f ] = > [ ( 50% , 50% ), 50% ]
+        float kidX;
+        float kidY;
+        float kidForce;
+        float chance = Random.Range(0f, 1f);
+
+        kidX = population[mommy].getDirection().x;
+        if (chance >= 0.5f)
+            kidX = population[daddy].getDirection().x;
+        
+        chance = Random.Range(0f, 1f);
+
+        kidY = population[daddy].getDirection().y;
+        if (chance >= 0.5f)
+            kidY = population[mommy].getDirection().y;
+        
+        chance = Random.Range(0f,1f);
+
+        kidForce = population[mommy].getForce();
+        if(chance >= 0.5f)
+            kidForce = population[daddy].getForce();
+        
     }
 
     public int GetPopulationSize()

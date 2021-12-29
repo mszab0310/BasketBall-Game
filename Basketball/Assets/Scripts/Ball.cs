@@ -24,7 +24,6 @@ public class Ball : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("ball awakens");
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _minDistanceFromHoop = Vector2.Distance(_rigidbody2D.position, hoop.transform.position);
