@@ -13,21 +13,26 @@ public class BallFactory : MonoBehaviour
     private float[] _launchForces = new float[100];
     void Start()
     {
-        ScoreScript.scoreValue = 0;
+       /* ScoreScript.scoreValue = 0;
         CreateBalls(10);
         SetLaunch();
         LaunchBalls(10);
-        StartCoroutine(WaitFiveSeconds());
+        StartCoroutine(WaitFiveSeconds());*/
         
     }
 
-    private void CreateBalls(int count)
+    public void CreateBalls(int count)
     {
         for (int i = 0; i < count; i++)
         {
             balls.Add(Instantiate(ball, new Vector2(ball.transform.position.x, ball.transform.position.y), Quaternion.identity) as Rigidbody2D);
               
         }
+    }
+
+    public void Wait()
+    {
+        StartCoroutine(WaitFiveSeconds());
     }
 
     private void LaunchBalls(int count)
@@ -39,6 +44,14 @@ public class BallFactory : MonoBehaviour
             i++;
         }
 
+    }
+
+    public void LaunchPopulation(List<Individual> population, int populationSize)
+    {
+        for(int i = 0; i < populationSize; i++)
+        {
+            ball.GetComponent<Ball>().LaunchBall(population[i].getDirection(), population[i].getForce(), i);
+        }
     }
 
     private void SetLaunch()

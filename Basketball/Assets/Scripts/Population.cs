@@ -47,6 +47,11 @@ public class Population
             return 0;
     }
 
+    public int GetPopulationSize()
+    {
+        return this.populationSize;
+    }
+
  }
 
 
