@@ -13,13 +13,23 @@ public class Launcher : MonoBehaviour
         population = new Population(100);
         population.generatePopulation();
         ballFactoryScript = ballFactory.GetComponent<BallFactory>();
+        ballFactoryScript.CreateBalls(population.GetPopulationSize());
     }
 
     public void StartSimulation()
     {
-        ScoreScript.scoreValue = 0;
-        ballFactoryScript.CreateBalls(population.GetPopulationSize());
-        ballFactoryScript.LaunchPopulation(population.GetPopulation(), population.GetPopulationSize());
-        ballFactoryScript.Wait(population.GetPopulation(),population.GetPopulationSize());
+        StartCoroutine(Simulate());
+    }
+
+    private IEnumerator Simulate()
+    {
+        for (int i = 0; i < 1000; i++)
+        {
+            ScoreScript.scoreValue = 0;
+            ballFactoryScript.LaunchPopulation(population.GetPopulation(), population.GetPopulationSize());
+            ballFactoryScript.Wait(population.GetPopulation(), population.GetPopulationSize());
+            yield return new WaitForSeconds(7.6f);
+            Debug.Log("Generation " + i);
+        }
     }
 }
