@@ -56,6 +56,7 @@ public class Population
 
     public void Recombinate()
     {
+        float recombFactor = 0.5f;
         int daddy;
         int mommy;
         for (int i = 0; i < populationSize / 2; i++)
@@ -69,22 +70,22 @@ public class Population
             float kidX;
             float kidY;
             float kidForce;
-            float chance = Random.Range(0f, 1f);
+            float chance = Random.Range(0f, 1f); //the chance to get from one of the parents
 
-            kidX = population[mommy].getDirection().x;
-            if (chance >= 0.5f)
+            kidX = population[mommy].getDirection().x; //initialize with one and if the chance falls trough, swap it
+            if (chance >= recombFactor)
                 kidX = population[daddy].getDirection().x;
 
             chance = Random.Range(0f, 1f);
 
             kidY = population[daddy].getDirection().y;
-            if (chance >= 0.5f)
+            if (chance >= recombFactor)
                 kidY = population[mommy].getDirection().y;
 
             chance = Random.Range(0f, 1f);
 
             kidForce = population[mommy].getForce();
-            if (chance >= 0.5f)
+            if (chance >= recombFactor)
                 kidForce = population[daddy].getForce();
             children.Add(new Individual(new Vector2(kidX, kidY), kidForce));
             parents.Add(Tuple.Create(daddy, mommy));
@@ -95,18 +96,50 @@ public class Population
     public void MutateChildren()
     {
         //Children will have a 25% chance of mutation
-        //if the will mutate, the will have a 50% chance on each genome to mutate
+        //if the will mutate, the will have a 25% chance on each genome to mutate
+        float mutationChance = 0.25f;
+        float genomeChance = 0.25f;
         float mutate = Random.Range(0f, 1f);
-        if(mutate <= 0.25f)
+        foreach (Individual child in children)
         {
-            float genomeMutate = Random.Range(0f, 1f);
-            //TODO
+            if (mutate <= mutationChance) //checks if the children will mutate or not
+            {
+                float genomeMutate = Random.Range(0f, 1f);
+                if (genomeMutate <= genomeChance) //checks if the first genome will mutate or not
+                {
+                    child.setDirection(MutateDirection(child.getDirection()));
+                }
+                genomeMutate = Random.Range(0f, 1f);
+                if (genomeMutate <= genomeChance) //checks if the second genom will mutate or not
+                {
+                    float randForce = Random.Range(-50f, 50f);
+                    child.setForce(child.getForce() + randForce);
+                }
 
+            }
+            mutate = Random.Range(0f, 1f);
         }
     }
 
     private Vector2 MutateDirection(Vector2 direction)
     {
+        float dirCh = Random.Range(0f, 1f);
+
+        float randX = Random.Range(-2f, 2f);
+        float randY = Random.Range(-2f, 2f);
+
+        if(dirCh >= 0.5f)
+        {
+            direction.x += randX;
+        }
+
+        dirCh = Random.Range(0f, 1f);
+
+        if (dirCh <= 0.5f)
+        {
+            direction.y += randY;
+        }
+       
         return direction;
     }
 
@@ -119,6 +152,8 @@ public class Population
     {
         return this.populationSize;
     }
+
+    
 
  }
 

@@ -31,6 +31,7 @@ public class Launcher : MonoBehaviour
             yield return new WaitForSeconds(7.6f);
             population.Recombinate();
             Debug.Log("Childrn");
+            population.MutateChildren();
             ballFactoryScript.LaunchPopulation(population.GetChildren(), population.GetChildren().Count);
             ballFactoryScript.Wait(population.GetChildren(), population.GetChildren().Count);
             yield return new WaitForSeconds(7.6f);
