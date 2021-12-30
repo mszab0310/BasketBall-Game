@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -153,9 +154,58 @@ public class Population
         return this.populationSize;
     }
 
-    
+    public void Selection()
+    {
+        for (int i = 0; i < children.Count; i++)
+        {
+            Individual daddy = population[parents[i].Item1];
+            Individual mommy = population[parents[i].Item2];
+            int whoDies = SoftMaxSelect(daddy.getFitness(), mommy.getFitness(), children[i].getFitness());
+            if(whoDies == 0)
+            {
+                population[parents[i].Item1] = children[i];
+            }else if(whoDies == 1)
+            {
+                population[parents[i].Item2] = children[i];
+            }
+        }
+        parents.Clear();
+        children.Clear();
+    }
 
- }
+    private int SoftMaxSelect(float dadFitness, float momFitness, float childFitness)//returns 0 for dad 1 for mom 2 for child
+    {
+        //calculates an inverse softmax for the three fitnesses, so the lowest fitness will have the highest chance of selection
+        double[] vals = { dadFitness, momFitness, childFitness };
+        double[] exp_vals = new double[3];
+        double exp_sum = 0.0;
+        double[] softm = new double[3];
+
+        for(int i = 0; i < 3; i++)
+        {
+            exp_vals[i] = Math.Exp(1-vals[i]);
+            exp_sum += exp_vals[i];
+        }
+
+        for(int i = 0; i < 3; i++)
+        {
+            softm[i] = exp_vals[i] / exp_sum;
+        }
+
+        double sum = 0.0;
+        double choice = Random.Range(0f, 1f);
+        int j = 0;
+        while(sum < choice)
+        {
+            sum += softm[j];
+            j++;
+        }
+        //returns the index of the element that was selected with a roulette type of selection
+        //returns 0 for dad 1 for mom 2 for child
+        return j -1; 
+    }
+
+}
 
 
    
