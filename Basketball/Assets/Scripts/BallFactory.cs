@@ -82,7 +82,7 @@ public class BallFactory : MonoBehaviour
     private IEnumerator WaitFiveSeconds(List<Individual> population, int populationSize)
     {
         yield return new WaitForSeconds(7.5f);
-        for(int i = 0;i < populationSize;i++)
+        for(int i = 0;i < populationSize; i++)
         {
             population[i].setFitness(ballscripts[i].GetFitness());
             Debug.Log(population[i].getFitness() + " <> " + i);

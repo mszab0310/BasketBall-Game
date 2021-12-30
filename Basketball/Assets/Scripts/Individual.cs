@@ -44,5 +44,14 @@ public class Individual
     {
         return this.fitness;
     }
-
+    public static int CompareIndividual(Individual a, Individual b)
+    {
+        if (a.getFitness() > b.getFitness())
+            return 1;
+        else
+        if (a.getFitness() < b.getFitness())
+            return -1;
+        else
+            return 0;
+    }
 }

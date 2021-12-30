@@ -151,7 +151,7 @@ public class Population
 
     public int GetPopulationSize()
     {
-        return this.populationSize;
+        return this.population.Count;
     }
 
     public void Selection()
