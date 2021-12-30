@@ -7,26 +7,34 @@ public class BallFactory : MonoBehaviour
 {
     public Rigidbody2D ball;
     public List<Rigidbody2D> balls;
-    public Ball ballscript;
+    public List<Ball> ballscripts;
     private int _inputSize = 0;
     private Vector2[] _directions = new Vector2[100];
     private float[] _launchForces = new float[100];
+    private float[] _fitness;
     void Start()
     {
-        ScoreScript.scoreValue = 0;
+       /* ScoreScript.scoreValue = 0;
         CreateBalls(10);
         SetLaunch();
         LaunchBalls(10);
-        StartCoroutine(WaitFiveSeconds());
+        StartCoroutine(WaitFiveSeconds());*/
+        
     }
 
-    private void CreateBalls(int count)
+    public void CreateBalls(int count)
     {
         for (int i = 0; i < count; i++)
         {
             balls.Add(Instantiate(ball, new Vector2(ball.transform.position.x, ball.transform.position.y), Quaternion.identity) as Rigidbody2D);
-
+            ballscripts.Add(balls[i].GetComponent<Ball>());
+              
         }
+    }
+
+    public void Wait(List<Individual> population, int populationSize)
+    {
+        StartCoroutine(WaitFiveSeconds(population,populationSize));
     }
 
     private void LaunchBalls(int count)
@@ -34,10 +42,18 @@ public class BallFactory : MonoBehaviour
         int i = 0;
         foreach (Rigidbody2D ball in balls)
         {
-            ball.GetComponent<Ball>().LaunchBall(_directions[i], _launchForces[i], i);
+            ballscripts[i].LaunchBall(_directions[i], _launchForces[i], i);
             i++;
         }
 
+    }
+
+    public void LaunchPopulation(List<Individual> population, int populationSize)
+    {
+        for(int i = 0; i < populationSize; i++)
+        {
+            ballscripts[i].LaunchBall(population[i].getDirection(), population[i].getForce(), i);
+        }
     }
 
     private void SetLaunch()
@@ -57,21 +73,20 @@ public class BallFactory : MonoBehaviour
             _directions[_inputSize].x = (float)System.Convert.ToDouble(words[0]);
             _directions[_inputSize].y = (float)System.Convert.ToDouble(words[1]);
             _launchForces[_inputSize] = (float)System.Convert.ToDouble(words[2]);
-            //Debug.Log("x: " + _directions[_inputSize].x + " y: " + _directions[_inputSize].y + " force: "
-            //    + _launchForces[_inputSize]);
+           
             _inputSize++;
         }
         streamReader.Close();
     }
 
-    private IEnumerator WaitFiveSeconds()
+    private IEnumerator WaitFiveSeconds(List<Individual> population, int populationSize)
     {
-        yield return new WaitForSeconds(5);
-        foreach (Rigidbody2D ball in balls)
+        yield return new WaitForSeconds(7.5f);
+        for(int i = 0;i < populationSize;i++)
         {
-            Debug.Log("Ball " + ball.GetComponent<Ball>().GetIndex() + ": " + ball.GetComponent<Ball>().GetMinDistanceFromHoop() +
-                " Fitness: " + ball.GetComponent<Ball>().GetFitness());
+            population[i].setFitness(ballscripts[i].GetFitness());
+            Debug.Log(population[i].getFitness() + " <> " + i);
+            
         }
-   
     }
 }

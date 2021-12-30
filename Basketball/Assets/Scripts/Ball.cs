@@ -29,15 +29,9 @@ public class Ball : MonoBehaviour
         _minDistanceFromHoop = Vector2.Distance(_rigidbody2D.position, hoop.transform.position);
         _startPosition = _rigidbody2D.position;
         _rigidbody2D.isKinematic = true;
-        //Debug.Log(Camera.main.GetComponent<EdgeCollider2D>().points[0]);
-        //GetFitness();
+   
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
+   
     private void OnMouseUp()
     {
         Vector2 currentPosition = _rigidbody2D.position;
@@ -76,17 +70,13 @@ public class Ball : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (delay == true)
-        {
-            delay = false;
-            StartCoroutine(ResetAfterDelay());
-        }
+        
 
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.name.Equals("Hoop") && _rigidbody2D.position.y > collision.gameObject.transform.position.y && didScore == false)
+        if (IsScore(collision))
         {
             ScoreScript.scoreValue += 1;
             didScore = true;
@@ -94,27 +84,38 @@ public class Ball : MonoBehaviour
 
     }
 
+    private bool IsScore(Collider2D collision)
+        => collision.gameObject.name.Equals("Hoop") 
+            && _rigidbody2D.position.y > collision.gameObject.transform.position.y 
+        && !didScore;
+    
+
 
     private IEnumerator ResetAfterDelay()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(7);
         _rigidbody2D.position = _startPosition;
         _rigidbody2D.isKinematic = true;
         _rigidbody2D.velocity = Vector2.zero;
         _rigidbody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
         delay = false;
-        didScore = false;
     }
 
 
     public void LaunchBall(Vector2 direction, float launchForce, int index)
     {
         _index = index;
-        _rigidbody2D.isKinematic = false;
+        didScore = false;
+        this._rigidbody2D.isKinematic = false;
         _launchForce = launchForce;
         _rigidbody2D.constraints = RigidbodyConstraints2D.None;
         _rigidbody2D.AddForce(direction * launchForce);
         delay = true;
+        if (delay)
+        {
+            delay = false;
+            StartCoroutine(ResetAfterDelay());
+        }
     }
 
     public int GetIndex()
