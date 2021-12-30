@@ -23,7 +23,7 @@ public class Launcher : MonoBehaviour
 
     private IEnumerator Simulate()
     {
-        for (int i = 0; i < 500; i++)
+        for (int i = 0; i < 1000; i++)
         {
             ScoreScript.scoreValue = 0;
             ballFactoryScript.LaunchPopulation(population.GetPopulation(), population.GetPopulationSize());
