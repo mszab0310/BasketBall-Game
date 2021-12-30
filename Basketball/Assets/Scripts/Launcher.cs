@@ -23,18 +23,24 @@ public class Launcher : MonoBehaviour
 
     private IEnumerator Simulate()
     {
-        for (int i = 0; i < 1; i++)
+        for (int i = 0; i < 500; i++)
         {
             ScoreScript.scoreValue = 0;
             ballFactoryScript.LaunchPopulation(population.GetPopulation(), population.GetPopulationSize());
             ballFactoryScript.Wait(population.GetPopulation(), population.GetPopulationSize());
+
             yield return new WaitForSeconds(7.6f);
+
             population.Recombinate();
             Debug.Log("Childrn");
             population.MutateChildren();
+
             ballFactoryScript.LaunchPopulation(population.GetChildren(), population.GetChildren().Count);
             ballFactoryScript.Wait(population.GetChildren(), population.GetChildren().Count);
+
             yield return new WaitForSeconds(7.6f);
+
+            population.Selection();
             Debug.Log("Generation " + i);
         }
     }
