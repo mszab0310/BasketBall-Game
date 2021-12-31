@@ -35,17 +35,17 @@ public class BallFactory : MonoBehaviour
     }
 
 
-    public void LaunchPopulation(List<Individual> population, int populationSize)
+    public void LaunchPopulation(List<Individual> population, int populationSize,bool isChild)
     {
         for(int i = 0; i < populationSize; i++)
         {
-            ballscripts[i].LaunchBall(population[i].getDirection(), population[i].getForce(), i);
+            ballscripts[i].LaunchBall(population[i].getDirection(), population[i].getForce(), i,isChild);
         }
     }
 
     public void LaunchBall(Individual ball)
     {
-        ballscripts[0].LaunchBall(ball.getDirection(), ball.getForce(),0);
+        ballscripts[0].LaunchBall(ball.getDirection(), ball.getForce(),0,false);
     }
 
     public void setTimeScale(float timeScale)

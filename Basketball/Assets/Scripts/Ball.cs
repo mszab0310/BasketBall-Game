@@ -25,6 +25,7 @@ public class Ball : MonoBehaviour
     private Vector2 _leftCollider;
     private Vector2 _hoopCollider;
     private bool _wasAbove;
+    private bool _isChild;
 
     private void Awake()
     {
@@ -92,7 +93,15 @@ public class Ball : MonoBehaviour
     {
         if (IsScore(collision))
         {
-            ScoreScript.scoreValue += 1;
+            if (_isChild)
+            {
+                ChildScore.scoreValue++;
+            }
+            else
+            {
+                ScoreScript.scoreValue += 1;
+            }
+            
             didScore = true;
         }
 
@@ -116,8 +125,9 @@ public class Ball : MonoBehaviour
     }
 
 
-    public void LaunchBall(Vector2 direction, float launchForce, int index)
+    public void LaunchBall(Vector2 direction, float launchForce, int index, bool isChild)
     {
+        _isChild = isChild;
         _index = index;
         didScore = false;
         this._rigidbody2D.isKinematic = false;
@@ -164,7 +174,7 @@ public class Ball : MonoBehaviour
     }
     public float GetFitness()
     {
-        return this.betterPercentageFitness();
+        return this.percentageFitness();
     }
 
 }

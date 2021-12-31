@@ -23,7 +23,10 @@ public class Launcher : MonoBehaviour
     }
 
     public void StartSimulation()
-    {  
+    {
+        string path = Directory.GetCurrentDirectory();
+        path += "/Assets/Scripts/data/fitnesses.txt";
+        File.Create(path).Close();
         StartCoroutine(Simulate());
     }
 
@@ -37,7 +40,8 @@ public class Launcher : MonoBehaviour
         for (int i = 0; i < 100; i++)
         {
             ScoreScript.scoreValue = 0;
-            ballFactoryScript.LaunchPopulation(population.GetPopulation(), population.GetPopulationSize());
+            WriteAllToFile();
+            ballFactoryScript.LaunchPopulation(population.GetPopulation(), population.GetPopulationSize(),false);
             ballFactoryScript.Wait(population.GetPopulation(), population.GetPopulationSize());
             
 
@@ -53,8 +57,8 @@ public class Launcher : MonoBehaviour
             population.Recombinate();
             Debug.Log("Childrn");
             population.MutateChildren();
-            ScoreScript.scoreValue = 0;
-            ballFactoryScript.LaunchPopulation(population.GetChildren(), population.GetChildren().Count);
+            ChildScore.scoreValue = 0;
+            ballFactoryScript.LaunchPopulation(population.GetChildren(), population.GetChildren().Count,true);
             ballFactoryScript.Wait(population.GetChildren(), population.GetChildren().Count);
 
             yield return new WaitForSeconds(7.6f);
@@ -75,6 +79,8 @@ public class Launcher : MonoBehaviour
         Debug.Log("--------TOP---10-----");
         Debug.Log(Time.timeScale  + " - " + bestIndividuals.Count);
         ballFactoryScript.setTimeScale(1f);
+        ScoreScript.scoreValue = 0;
+        ChildScore.scoreValue = 0;
         for(int i = 0; i < bestIndividuals.Count; i++)
         {
             if(i != 0 && !bestIndividuals[i].Equals(bestIndividuals[i - 1]))
@@ -101,13 +107,29 @@ public class Launcher : MonoBehaviour
         goodIndividuals.Clear();
       
     }
+
+    private void WriteAllToFile()
+    {
+        string path = Directory.GetCurrentDirectory();
+        path += "/Assets/Scripts/data/fitnesses.txt";
+        using StreamWriter file = new StreamWriter(path, append: true);
+        string fitnesses = "";
+        foreach(Individual individual in population.GetPopulation())
+        {
+            fitnesses += individual.getFitness();
+            fitnesses += " ";
+        }
+        file.WriteLine(fitnesses);
+        file.Close();
+    }
+
     private void WriteToFile(string path)
     {
         using StreamWriter file = new StreamWriter(path, append: false);
         for (int j = 0; j < bestIndividuals.Count - 1; j++)
         {
-            file.WriteLine("Best individuals " + j + ": " + bestIndividuals[j].getDirection() 
-                + " " + bestIndividuals[j].getForce() + " " + bestIndividuals[j].getFitness());
+            file.WriteLine( bestIndividuals[j].getDirection() 
+                + " " + bestIndividuals[j].getForce());
         }
         file.Write("Best individuals " + (bestIndividuals.Count - 1) + ": " + bestIndividuals[bestIndividuals.Count - 1].getDirection() 
             + " " + bestIndividuals[bestIndividuals.Count - 1].getForce() + " " + bestIndividuals[bestIndividuals.Count - 1].getFitness());
