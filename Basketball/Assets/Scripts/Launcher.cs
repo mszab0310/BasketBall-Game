@@ -29,7 +29,7 @@ public class Launcher : MonoBehaviour
 
     private IEnumerator Simulate()
     {
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < 100; i++)
         {
             ScoreScript.scoreValue = 0;
             ballFactoryScript.LaunchPopulation(population.GetPopulation(), population.GetPopulationSize());
@@ -48,7 +48,7 @@ public class Launcher : MonoBehaviour
             population.Recombinate();
             Debug.Log("Childrn");
             population.MutateChildren();
-
+            ScoreScript.scoreValue = 0;
             ballFactoryScript.LaunchPopulation(population.GetChildren(), population.GetChildren().Count);
             ballFactoryScript.Wait(population.GetChildren(), population.GetChildren().Count);
 
@@ -68,10 +68,6 @@ public class Launcher : MonoBehaviour
     {
         populationCopy = new List<Individual>(population.GetPopulation());
         populationCopy.Sort(Individual.CompareIndividual);
-        for(int j=0; j<populationCopy.Count; j++)
-        {
-            Debug.Log("PopulationCopy " + j + ": " + populationCopy[j].getDirection() + " " + populationCopy[j].getForce() +" "+ populationCopy[j].getFitness());
-        }
         //Adds the best element from one generation
         goodIndividuals.Add(populationCopy[populationCopy.Count-1]);
 
@@ -79,13 +75,7 @@ public class Launcher : MonoBehaviour
     private void BestFromTen()
     {
         goodIndividuals.Sort(Individual.CompareIndividual);
-        for (int j = 0; j < goodIndividuals.Count; j++)
-        {
-            Debug.Log("Good individuals " + j + ": " + goodIndividuals[j].getDirection() + " " + goodIndividuals[j].getForce()+ " " + goodIndividuals[j].getFitness());
-        }
-        
         bestIndividuals.Add(goodIndividuals[goodIndividuals.Count-1]);
-        Debug.Log("Best individual: " + (goodIndividuals.Count - 1)+ " "+ bestIndividuals[bestIndividuals.Count - 1].getDirection() + " " + bestIndividuals[bestIndividuals.Count - 1].getForce() + " " + bestIndividuals[bestIndividuals.Count - 1].getFitness());
         goodIndividuals.Clear();
       
     }
@@ -94,9 +84,11 @@ public class Launcher : MonoBehaviour
         using StreamWriter file = new StreamWriter(path, append: false);
         for (int j = 0; j < bestIndividuals.Count - 1; j++)
         {
-            file.WriteLine("Best individuals " + j + ": " + bestIndividuals[j].getDirection() + " " + bestIndividuals[j].getForce() + " " + bestIndividuals[j].getFitness());
+            file.WriteLine("Best individuals " + j + ": " + bestIndividuals[j].getDirection() 
+                + " " + bestIndividuals[j].getForce() + " " + bestIndividuals[j].getFitness());
         }
-        file.Write("Best individuals " + (bestIndividuals.Count - 1) + ": " + bestIndividuals[bestIndividuals.Count - 1].getDirection() + " " + bestIndividuals[bestIndividuals.Count - 1].getForce() + " " + bestIndividuals[bestIndividuals.Count - 1].getFitness());
+        file.Write("Best individuals " + (bestIndividuals.Count - 1) + ": " + bestIndividuals[bestIndividuals.Count - 1].getDirection() 
+            + " " + bestIndividuals[bestIndividuals.Count - 1].getForce() + " " + bestIndividuals[bestIndividuals.Count - 1].getFitness());
         file.Close();
     }
 

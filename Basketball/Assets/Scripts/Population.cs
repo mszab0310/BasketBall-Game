@@ -50,7 +50,7 @@ public class Population
             do
             {
                 daddy = Random.Range(0, populationSize);
-            } while (mommy != daddy);
+            } while (mommy == daddy);
             // [ (x,y), f ] = > [ ( 50% , 50% ), 50% ]
             float kidX;
             float kidY;

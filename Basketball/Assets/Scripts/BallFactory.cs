@@ -8,10 +8,6 @@ public class BallFactory : MonoBehaviour
     public Rigidbody2D ball;
     public List<Rigidbody2D> balls;
     public List<Ball> ballscripts;
-    private int _inputSize = 0;
-    private Vector2[] _directions = new Vector2[100];
-    private float[] _launchForces = new float[100];
-    private float[] _fitness;
     void Start()
     {
         
@@ -39,29 +35,6 @@ public class BallFactory : MonoBehaviour
         {
             ballscripts[i].LaunchBall(population[i].getDirection(), population[i].getForce(), i);
         }
-    }
-
-    private void SetLaunch()
-    {
-        string path = Directory.GetCurrentDirectory();
-        path += "/Assets/Scripts/input.txt";
-        ReadTextFile(path);
-    }
-
-    private void ReadTextFile(string filePath)
-    {
-        StreamReader streamReader = new StreamReader(filePath);
-        while (!streamReader.EndOfStream)
-        {
-            string input = streamReader.ReadLine();
-            string[] words = input.Split(' ');
-            _directions[_inputSize].x = (float)System.Convert.ToDouble(words[0]);
-            _directions[_inputSize].y = (float)System.Convert.ToDouble(words[1]);
-            _launchForces[_inputSize] = (float)System.Convert.ToDouble(words[2]);
-           
-            _inputSize++;
-        }
-        streamReader.Close();
     }
 
     private IEnumerator WaitFiveSeconds(List<Individual> population, int populationSize)

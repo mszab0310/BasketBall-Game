@@ -24,6 +24,7 @@ public class Ball : MonoBehaviour
     private float _distanceLeftToHoop;
     private Vector2 _leftCollider;
     private Vector2 _hoopCollider;
+    private bool _wasAbove;
 
     private void Awake()
     {
@@ -35,6 +36,7 @@ public class Ball : MonoBehaviour
         _leftCollider = Camera.main.GetComponent<EdgeCollider2D>().points[0];
         _hoopCollider = new Vector2(hoop.transform.position.x, hoop.transform.position.y);
         _distanceLeftToHoop = Vector2.Distance(_leftCollider, _hoopCollider);
+        _wasAbove = (_rigidbody2D.position.y > hoop.transform.position.y);
 
     }
    
@@ -72,6 +74,7 @@ public class Ball : MonoBehaviour
         if (_distanceFromHoop < _minDistanceFromHoop)
         {
             _minDistanceFromHoop = _distanceFromHoop;
+            _wasAbove = (_rigidbody2D.position.y > hoop.transform.position.y);
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)
@@ -137,12 +140,26 @@ public class Ball : MonoBehaviour
     {
         return _distanceLeftToHoop;
     }
-    public float GetFitness()
+
+    private float percentageFitness()
     {
         float accuracy = 0f;
         accuracy = 100 - _minDistanceFromHoop / _distanceLeftToHoop * 100;
         int scored = didScore ? 100 : 0;
         return accuracy * 0.4f + scored * 0.6f;
+    }
+
+    private float betterPercentageFitness()
+    {
+        float accuracy = 0f;
+        accuracy = 100 - _minDistanceFromHoop / _distanceLeftToHoop * 100;
+        int scored = didScore ? 100 : 0;
+        int above = _wasAbove ? 100 : 0;
+        return 0.6f*accuracy + 0.2f*above + 0.2f*scored;
+    }
+    public float GetFitness()
+    {
+        return this.betterPercentageFitness();
     }
 
 }
