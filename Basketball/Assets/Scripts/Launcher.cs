@@ -23,8 +23,13 @@ public class Launcher : MonoBehaviour
     }
 
     public void StartSimulation()
-    {
+    {  
         StartCoroutine(Simulate());
+    }
+
+    public void PlayTopTen()
+    {
+        StartCoroutine(SimulateTopTen());
     }
 
     private IEnumerator Simulate()
@@ -61,7 +66,23 @@ public class Launcher : MonoBehaviour
         string path = Directory.GetCurrentDirectory();
         path += "/Assets/Scripts/top10.txt";
         WriteToFile(path);
-        bestIndividuals.Clear();
+       // bestIndividuals.Clear();
+    }
+
+    private IEnumerator SimulateTopTen()
+    {
+        
+        Debug.Log("--------TOP---10-----");
+        Debug.Log(Time.timeScale  + " - " + bestIndividuals.Count);
+        ballFactoryScript.setTimeScale(1f);
+        for(int i = 0; i < bestIndividuals.Count; i++)
+        {
+            Debug.Log(i + "st");
+            ballFactoryScript.LaunchBall(bestIndividuals[i]);
+            yield return new WaitForSeconds(7.6f);
+            
+        }        
+        Debug.Log("-------------");
     }
 
     private void AddBestIndividualFromGeneration()

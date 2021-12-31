@@ -28,6 +28,12 @@ public class BallFactory : MonoBehaviour
         StartCoroutine(WaitFiveSeconds(population,populationSize));
     }
 
+    public void ResetSimulation()
+    {
+        balls.Clear();
+        ballscripts.Clear();
+    }
+
 
     public void LaunchPopulation(List<Individual> population, int populationSize)
     {
@@ -37,6 +43,18 @@ public class BallFactory : MonoBehaviour
         }
     }
 
+    public void LaunchBall(Individual ball)
+    {
+        ballscripts[0].LaunchBall(ball.getDirection(), ball.getForce(),0);
+    }
+
+    public void setTimeScale(float timeScale)
+    {
+        foreach(Ball ball in ballscripts)
+        {
+            ball.setTimeScale(timeScale);
+        }
+    }
     private IEnumerator WaitFiveSeconds(List<Individual> population, int populationSize)
     {
         yield return new WaitForSeconds(7.5f);

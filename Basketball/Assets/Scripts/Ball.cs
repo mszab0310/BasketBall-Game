@@ -77,6 +77,11 @@ public class Ball : MonoBehaviour
             _wasAbove = (_rigidbody2D.position.y > hoop.transform.position.y);
         }
     }
+
+    public void setTimeScale(float timeScale)
+    {
+        this._timeScale = timeScale;
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         
