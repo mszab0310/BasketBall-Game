@@ -8,17 +8,8 @@ public class BallFactory : MonoBehaviour
     public Rigidbody2D ball;
     public List<Rigidbody2D> balls;
     public List<Ball> ballscripts;
-    private int _inputSize = 0;
-    private Vector2[] _directions = new Vector2[100];
-    private float[] _launchForces = new float[100];
-    private float[] _fitness;
     void Start()
     {
-       /* ScoreScript.scoreValue = 0;
-        CreateBalls(10);
-        SetLaunch();
-        LaunchBalls(10);
-        StartCoroutine(WaitFiveSeconds());*/
         
     }
 
@@ -37,16 +28,6 @@ public class BallFactory : MonoBehaviour
         StartCoroutine(WaitFiveSeconds(population,populationSize));
     }
 
-    private void LaunchBalls(int count)
-    {
-        int i = 0;
-        foreach (Rigidbody2D ball in balls)
-        {
-            ballscripts[i].LaunchBall(_directions[i], _launchForces[i], i);
-            i++;
-        }
-
-    }
 
     public void LaunchPopulation(List<Individual> population, int populationSize)
     {
@@ -56,33 +37,10 @@ public class BallFactory : MonoBehaviour
         }
     }
 
-    private void SetLaunch()
-    {
-        string path = Directory.GetCurrentDirectory();
-        path += "/Assets/Scripts/input.txt";
-        ReadTextFile(path);
-    }
-
-    private void ReadTextFile(string filePath)
-    {
-        StreamReader streamReader = new StreamReader(filePath);
-        while (!streamReader.EndOfStream)
-        {
-            string input = streamReader.ReadLine();
-            string[] words = input.Split(' ');
-            _directions[_inputSize].x = (float)System.Convert.ToDouble(words[0]);
-            _directions[_inputSize].y = (float)System.Convert.ToDouble(words[1]);
-            _launchForces[_inputSize] = (float)System.Convert.ToDouble(words[2]);
-           
-            _inputSize++;
-        }
-        streamReader.Close();
-    }
-
     private IEnumerator WaitFiveSeconds(List<Individual> population, int populationSize)
     {
         yield return new WaitForSeconds(7.5f);
-        for(int i = 0;i < populationSize;i++)
+        for(int i = 0;i < populationSize; i++)
         {
             population[i].setFitness(ballscripts[i].GetFitness());
             Debug.Log(population[i].getFitness() + " <> " + i);

@@ -38,22 +38,6 @@ public class Population
         return this.population;
     }
 
-    public void SortPopulation()
-    {
-        this.population.Sort(CompareIndividual);
-    }
-
-    public int CompareIndividual(Individual a, Individual b)
-    {
-        if (a.getFitness() > b.getFitness())
-            return 1;
-        else
-        if (a.getFitness() < b.getFitness())
-            return -1; 
-        else
-            return 0;
-    }
-
 
     public void Recombinate()
     {
@@ -66,7 +50,7 @@ public class Population
             do
             {
                 daddy = Random.Range(0, populationSize);
-            } while (mommy != daddy);
+            } while (mommy == daddy);
             // [ (x,y), f ] = > [ ( 50% , 50% ), 50% ]
             float kidX;
             float kidY;
@@ -151,7 +135,7 @@ public class Population
 
     public int GetPopulationSize()
     {
-        return this.populationSize;
+        return this.population.Count;
     }
 
     public void Selection()
