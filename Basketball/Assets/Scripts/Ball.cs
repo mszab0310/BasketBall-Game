@@ -21,6 +21,9 @@ public class Ball : MonoBehaviour
     private float _distanceFromHoop;
     private float _minDistanceFromHoop;
     private int _index;
+    private float _distanceLeftToHoop;
+    private Vector2 _leftCollider;
+    private Vector2 _hoopCollider;
 
     private void Awake()
     {
@@ -29,7 +32,10 @@ public class Ball : MonoBehaviour
         _minDistanceFromHoop = Vector2.Distance(_rigidbody2D.position, hoop.transform.position);
         _startPosition = _rigidbody2D.position;
         _rigidbody2D.isKinematic = true;
-   
+        _leftCollider = Camera.main.GetComponent<EdgeCollider2D>().points[0];
+        _hoopCollider = new Vector2(hoop.transform.position.x, hoop.transform.position.y);
+        _distanceLeftToHoop = Vector2.Distance(_leftCollider, _hoopCollider);
+
     }
    
     private void OnMouseUp()
@@ -127,14 +133,14 @@ public class Ball : MonoBehaviour
     {
         return _minDistanceFromHoop;
     }
-
+    public float GetDistanceFromLeftToHoop()
+    {
+        return _distanceLeftToHoop;
+    }
     public float GetFitness()
     {
         float accuracy = 0f;
-        Vector2 leftCollider = Camera.main.GetComponent<EdgeCollider2D>().points[0];
-        Vector2 hoopCollider = new Vector2(hoop.transform.position.x, hoop.transform.position.y);
-        float distance = Vector2.Distance(leftCollider, hoopCollider);
-        accuracy = 100 - _minDistanceFromHoop / distance * 100;
+        accuracy = 100 - _minDistanceFromHoop / _distanceLeftToHoop * 100;
         int scored = didScore ? 100 : 0;
         return accuracy * 0.4f + scored * 0.6f;
     }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class Launcher : MonoBehaviour
@@ -28,7 +29,7 @@ public class Launcher : MonoBehaviour
 
     private IEnumerator Simulate()
     {
-        for (int i = 0; i < 100; i++)
+        for (int i = 0; i < 20; i++)
         {
             ScoreScript.scoreValue = 0;
             ballFactoryScript.LaunchPopulation(population.GetPopulation(), population.GetPopulationSize());
@@ -56,28 +57,47 @@ public class Launcher : MonoBehaviour
             population.Selection();
             Debug.Log("Generation " + i);
         }
-        for (int j = 0; j < goodIndividuals.Count; j++)
-        {
-            Debug.Log("Good individuals " + j + ": " + goodIndividuals[j].getFitness());
-        }
-        for (int j = 0; j < bestIndividuals.Count; j++)
-        {
-            Debug.Log("Best individuals " + j + ": " + bestIndividuals[j].getFitness());
-        }
+
+        string path = Directory.GetCurrentDirectory();
+        path += "/Assets/Scripts/top10.txt";
+        WriteToFile(path);
+        bestIndividuals.Clear();
     }
 
     private void AddBestIndividualFromGeneration()
     {
         populationCopy = new List<Individual>(population.GetPopulation());
         populationCopy.Sort(Individual.CompareIndividual);
+        for(int j=0; j<populationCopy.Count; j++)
+        {
+            Debug.Log("PopulationCopy " + j + ": " + populationCopy[j].getDirection() + " " + populationCopy[j].getForce() +" "+ populationCopy[j].getFitness());
+        }
         //Adds the best element from one generation
         goodIndividuals.Add(populationCopy[populationCopy.Count-1]);
-       
+
     }
     private void BestFromTen()
     {
         goodIndividuals.Sort(Individual.CompareIndividual);
+        for (int j = 0; j < goodIndividuals.Count; j++)
+        {
+            Debug.Log("Good individuals " + j + ": " + goodIndividuals[j].getDirection() + " " + goodIndividuals[j].getForce()+ " " + goodIndividuals[j].getFitness());
+        }
+        
         bestIndividuals.Add(goodIndividuals[goodIndividuals.Count-1]);
+        Debug.Log("Best individual: " + (goodIndividuals.Count - 1)+ " "+ bestIndividuals[bestIndividuals.Count - 1].getDirection() + " " + bestIndividuals[bestIndividuals.Count - 1].getForce() + " " + bestIndividuals[bestIndividuals.Count - 1].getFitness());
+        goodIndividuals.Clear();
       
     }
+    private void WriteToFile(string path)
+    {
+        using StreamWriter file = new StreamWriter(path, append: false);
+        for (int j = 0; j < bestIndividuals.Count - 1; j++)
+        {
+            file.WriteLine("Best individuals " + j + ": " + bestIndividuals[j].getDirection() + " " + bestIndividuals[j].getForce() + " " + bestIndividuals[j].getFitness());
+        }
+        file.Write("Best individuals " + (bestIndividuals.Count - 1) + ": " + bestIndividuals[bestIndividuals.Count - 1].getDirection() + " " + bestIndividuals[bestIndividuals.Count - 1].getForce() + " " + bestIndividuals[bestIndividuals.Count - 1].getFitness());
+        file.Close();
+    }
+
 }

@@ -38,22 +38,6 @@ public class Population
         return this.population;
     }
 
-    public void SortPopulation()
-    {
-        this.population.Sort(CompareIndividual);
-    }
-
-    public int CompareIndividual(Individual a, Individual b)
-    {
-        if (a.getFitness() > b.getFitness())
-            return 1;
-        else
-        if (a.getFitness() < b.getFitness())
-            return -1; 
-        else
-            return 0;
-    }
-
 
     public void Recombinate()
     {

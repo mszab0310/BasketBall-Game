@@ -14,11 +14,6 @@ public class BallFactory : MonoBehaviour
     private float[] _fitness;
     void Start()
     {
-       /* ScoreScript.scoreValue = 0;
-        CreateBalls(10);
-        SetLaunch();
-        LaunchBalls(10);
-        StartCoroutine(WaitFiveSeconds());*/
         
     }
 
@@ -37,16 +32,6 @@ public class BallFactory : MonoBehaviour
         StartCoroutine(WaitFiveSeconds(population,populationSize));
     }
 
-    private void LaunchBalls(int count)
-    {
-        int i = 0;
-        foreach (Rigidbody2D ball in balls)
-        {
-            ballscripts[i].LaunchBall(_directions[i], _launchForces[i], i);
-            i++;
-        }
-
-    }
 
     public void LaunchPopulation(List<Individual> population, int populationSize)
     {
