@@ -77,10 +77,11 @@ public class Launcher : MonoBehaviour
         ballFactoryScript.setTimeScale(1f);
         for(int i = 0; i < bestIndividuals.Count; i++)
         {
-            Debug.Log(i + "st");
-            ballFactoryScript.LaunchBall(bestIndividuals[i]);
-            yield return new WaitForSeconds(7.6f);
-            
+            if(i != 0 && !bestIndividuals[i].Equals(bestIndividuals[i - 1]))
+            {
+                ballFactoryScript.LaunchBall(bestIndividuals[i]);
+                yield return new WaitForSeconds(7.6f);
+            }
         }        
         Debug.Log("-------------");
     }
