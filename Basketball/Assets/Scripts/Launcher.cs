@@ -37,7 +37,7 @@ public class Launcher : MonoBehaviour
 
     private IEnumerator Simulate()
     {
-        for (int i = 0; i < 300; i++)
+        for (int i = 0; i < 150; i++)
         {
             ScoreScript.scoreValue = 0;
             WriteAllToFile();
