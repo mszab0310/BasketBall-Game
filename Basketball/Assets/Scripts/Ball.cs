@@ -26,6 +26,7 @@ public class Ball : MonoBehaviour
     private Vector2 _hoopCollider;
     private bool _wasAbove;
     private bool _isChild;
+    private int _collisionCount;
 
     private void Awake()
     {
@@ -38,6 +39,7 @@ public class Ball : MonoBehaviour
         _hoopCollider = new Vector2(hoop.transform.position.x, hoop.transform.position.y);
         _distanceLeftToHoop = Vector2.Distance(_leftCollider, _hoopCollider);
         _wasAbove = (_rigidbody2D.position.y > hoop.transform.position.y);
+        _collisionCount = 0;
 
     }
    
@@ -85,8 +87,7 @@ public class Ball : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        
-
+        _collisionCount++;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -127,6 +128,7 @@ public class Ball : MonoBehaviour
 
     public void LaunchBall(Vector2 direction, float launchForce, int index, bool isChild)
     {
+        _collisionCount = 0; 
         _isChild = isChild;
         _index = index;
         didScore = false;
@@ -172,9 +174,38 @@ public class Ball : MonoBehaviour
         int above = _wasAbove ? 100 : 0;
         return 0.6f*accuracy + 0.2f*above + 0.2f*scored;
     }
+
+    private float collisionFitness()
+    {   //0.4f * collisionScore + 0.3*didSCore + 0.15*_wasAbove + 0.15*accuracy
+        float accuracy = 0f;
+        accuracy = 100 - _minDistanceFromHoop / _distanceLeftToHoop * 100;
+        int scored = didScore ? 100 : 0;
+        int above = _wasAbove ? 100 : 0;
+        return (float)(getCollisionScore()*0.4f + 0.3f*scored + 0.15*above + 0.15*accuracy);
+    }
+
+    private float getCollisionScore()
+    {
+        int lowerBound = 2;
+        int upperBound = 7;
+        //any collision count <= lowerbound will be 100 pts, above or eq with upperbound 0 pts, inbetween will be computed
+        if(_collisionCount <= lowerBound)
+        {
+            return 100f;
+        }
+        if(_collisionCount >= upperBound)
+        {
+            return 0f;
+        }
+        float step = 100f / (upperBound - lowerBound);
+        float score = 100f - (_collisionCount - lowerBound) * step;
+        return score;
+    }
+
     public float GetFitness()
     {
-        return this.percentageFitness();
+        Debug.Log(_index + " CC : " + _collisionCount);
+        return this.betterPercentageFitness();
     }
 
 }
