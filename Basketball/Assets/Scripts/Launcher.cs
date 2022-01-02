@@ -37,7 +37,7 @@ public class Launcher : MonoBehaviour
 
     private IEnumerator Simulate()
     {
-        for (int i = 0; i < 200; i++)
+        for (int i = 0; i < 300; i++)
         {
             ScoreScript.scoreValue = 0;
             WriteAllToFile();
@@ -131,8 +131,8 @@ public class Launcher : MonoBehaviour
             file.WriteLine( bestIndividuals[j].getDirection() 
                 + " " + bestIndividuals[j].getForce());
         }
-        file.Write("Best individuals " + (bestIndividuals.Count - 1) + ": " + bestIndividuals[bestIndividuals.Count - 1].getDirection() 
-            + " " + bestIndividuals[bestIndividuals.Count - 1].getForce() + " " + bestIndividuals[bestIndividuals.Count - 1].getFitness());
+        file.Write( bestIndividuals[bestIndividuals.Count - 1].getDirection() 
+            + " " + bestIndividuals[bestIndividuals.Count - 1].getForce() );
         file.Close();
     }
 
