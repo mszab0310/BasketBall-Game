@@ -54,4 +54,12 @@ public class Individual
         else
             return 0;
     }
+    public bool Equals(Individual individual)
+    {
+        if(this.direction == individual.direction && this.force == individual.force)
+        {
+            return true;
+        }
+        return false;
+    }
 }

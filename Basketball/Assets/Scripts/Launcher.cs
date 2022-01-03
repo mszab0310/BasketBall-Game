@@ -24,15 +24,24 @@ public class Launcher : MonoBehaviour
 
     public void StartSimulation()
     {
+        string path = Directory.GetCurrentDirectory();
+        path += "/Assets/Scripts/data/fitnesses.txt";
+        File.Create(path).Close();
         StartCoroutine(Simulate());
+    }
+
+    public void PlayTopTen()
+    {
+        StartCoroutine(SimulateTopTen());
     }
 
     private IEnumerator Simulate()
     {
-        for (int i = 0; i < 100; i++)
+        for (int i = 0; i < 150; i++)
         {
             ScoreScript.scoreValue = 0;
-            ballFactoryScript.LaunchPopulation(population.GetPopulation(), population.GetPopulationSize());
+            WriteAllToFile();
+            ballFactoryScript.LaunchPopulation(population.GetPopulation(), population.GetPopulationSize(),false);
             ballFactoryScript.Wait(population.GetPopulation(), population.GetPopulationSize());
             
 
@@ -48,8 +57,8 @@ public class Launcher : MonoBehaviour
             population.Recombinate();
             Debug.Log("Childrn");
             population.MutateChildren();
-            ScoreScript.scoreValue = 0;
-            ballFactoryScript.LaunchPopulation(population.GetChildren(), population.GetChildren().Count);
+            ChildScore.scoreValue = 0;
+            ballFactoryScript.LaunchPopulation(population.GetChildren(), population.GetChildren().Count,true);
             ballFactoryScript.Wait(population.GetChildren(), population.GetChildren().Count);
 
             yield return new WaitForSeconds(7.6f);
@@ -61,7 +70,26 @@ public class Launcher : MonoBehaviour
         string path = Directory.GetCurrentDirectory();
         path += "/Assets/Scripts/top10.txt";
         WriteToFile(path);
-        bestIndividuals.Clear();
+       // bestIndividuals.Clear();
+    }
+
+    private IEnumerator SimulateTopTen()
+    {
+        
+        Debug.Log("--------TOP---10-----");
+        Debug.Log(Time.timeScale  + " - " + bestIndividuals.Count);
+        ballFactoryScript.setTimeScale(1f);
+        ScoreScript.scoreValue = 0;
+        ChildScore.scoreValue = 0;
+        for(int i = 0; i < bestIndividuals.Count; i++)
+        {
+            if(i != 0 && !bestIndividuals[i].Equals(bestIndividuals[i - 1]))
+            {
+                ballFactoryScript.LaunchBall(bestIndividuals[i]);
+                yield return new WaitForSeconds(7.6f);
+            }
+        }        
+        Debug.Log("-------------");
     }
 
     private void AddBestIndividualFromGeneration()
@@ -69,7 +97,12 @@ public class Launcher : MonoBehaviour
         populationCopy = new List<Individual>(population.GetPopulation());
         populationCopy.Sort(Individual.CompareIndividual);
         //Adds the best element from one generation
-        goodIndividuals.Add(populationCopy[populationCopy.Count-1]);
+        int i = 1;
+        while(goodIndividuals.Contains(populationCopy[populationCopy.Count - i]) && i < populationCopy.Count)
+        {
+            i++;
+        }
+        goodIndividuals.Add(populationCopy[populationCopy.Count-i]);
 
     }
     private void BestFromTen()
@@ -79,16 +112,32 @@ public class Launcher : MonoBehaviour
         goodIndividuals.Clear();
       
     }
+
+    private void WriteAllToFile()
+    {
+        string path = Directory.GetCurrentDirectory();
+        path += "/Assets/Scripts/data/fitnesses.txt";
+        using StreamWriter file = new StreamWriter(path, append: true);
+        string fitnesses = "";
+        foreach(Individual individual in population.GetPopulation())
+        {
+            fitnesses += individual.getFitness();
+            fitnesses += " ";
+        }
+        file.WriteLine(fitnesses);
+        file.Close();
+    }
+
     private void WriteToFile(string path)
     {
         using StreamWriter file = new StreamWriter(path, append: false);
         for (int j = 0; j < bestIndividuals.Count - 1; j++)
         {
-            file.WriteLine("Best individuals " + j + ": " + bestIndividuals[j].getDirection() 
-                + " " + bestIndividuals[j].getForce() + " " + bestIndividuals[j].getFitness());
+            file.WriteLine( bestIndividuals[j].getDirection() 
+                + " " + bestIndividuals[j].getForce());
         }
-        file.Write("Best individuals " + (bestIndividuals.Count - 1) + ": " + bestIndividuals[bestIndividuals.Count - 1].getDirection() 
-            + " " + bestIndividuals[bestIndividuals.Count - 1].getForce() + " " + bestIndividuals[bestIndividuals.Count - 1].getFitness());
+        file.Write( bestIndividuals[bestIndividuals.Count - 1].getDirection() 
+            + " " + bestIndividuals[bestIndividuals.Count - 1].getForce() );
         file.Close();
     }
 
