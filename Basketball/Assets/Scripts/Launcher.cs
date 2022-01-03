@@ -97,7 +97,12 @@ public class Launcher : MonoBehaviour
         populationCopy = new List<Individual>(population.GetPopulation());
         populationCopy.Sort(Individual.CompareIndividual);
         //Adds the best element from one generation
-        goodIndividuals.Add(populationCopy[populationCopy.Count-1]);
+        int i = 1;
+        while(goodIndividuals.Contains(populationCopy[populationCopy.Count - i]) && i < populationCopy.Count)
+        {
+            i++;
+        }
+        goodIndividuals.Add(populationCopy[populationCopy.Count-i]);
 
     }
     private void BestFromTen()

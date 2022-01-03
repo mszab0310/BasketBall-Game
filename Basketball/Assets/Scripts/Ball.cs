@@ -87,7 +87,11 @@ public class Ball : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        _collisionCount++;
+
+        if (!didScore)
+        {
+            _collisionCount++;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
