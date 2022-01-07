@@ -24,7 +24,7 @@ public class Population
     {
         for (int i = 0; i < this.populationSize; i++)
         {
-            population.Add(new Individual(GetRandomVector2(), UnityEngine.Random.Range(-500f, 500f)));
+            population.Add(new Individual(GetRandomVector2(), UnityEngine.Random.Range(-300f, 300f)));
         }
     }
 

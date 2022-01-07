@@ -37,7 +37,7 @@ public class Launcher : MonoBehaviour
 
     private IEnumerator Simulate()
     {
-        for (int i = 0; i < 150; i++)
+        for (int i = 0; i < 125; i++)
         {
             ScoreScript.scoreValue = 0;
             WriteAllToFile();
@@ -83,11 +83,11 @@ public class Launcher : MonoBehaviour
         ChildScore.scoreValue = 0;
         for(int i = 0; i < bestIndividuals.Count; i++)
         {
-            if(i != 0 && !bestIndividuals[i].Equals(bestIndividuals[i - 1]))
-            {
+           /* if(i != 0 && !bestIndividuals[i].Equals(bestIndividuals[i - 1]))
+            {*/
                 ballFactoryScript.LaunchBall(bestIndividuals[i]);
                 yield return new WaitForSeconds(7.6f);
-            }
+           // }
         }        
         Debug.Log("-------------");
     }
@@ -98,10 +98,10 @@ public class Launcher : MonoBehaviour
         populationCopy.Sort(Individual.CompareIndividual);
         //Adds the best element from one generation
         int i = 1;
-        while(goodIndividuals.Contains(populationCopy[populationCopy.Count - i]) && i < populationCopy.Count)
+        /*while(goodIndividuals.Contains(populationCopy[populationCopy.Count - i]) && i < populationCopy.Count)
         {
             i++;
-        }
+        }*/
         goodIndividuals.Add(populationCopy[populationCopy.Count-i]);
 
     }

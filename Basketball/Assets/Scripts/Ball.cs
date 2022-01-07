@@ -190,7 +190,7 @@ public class Ball : MonoBehaviour
 
     private float getCollisionScore()
     {
-        int lowerBound = 4;
+        int lowerBound = 2;
         int upperBound = 9;
         //any collision count <= lowerbound will be 100 pts, above or eq with upperbound 0 pts, inbetween will be computed
         if(_collisionCount <= lowerBound)
@@ -208,7 +208,7 @@ public class Ball : MonoBehaviour
 
     public float GetFitness()
     {
-        return this.collisionFitness();
+        return this.percentageFitness();
     }
 
 }
