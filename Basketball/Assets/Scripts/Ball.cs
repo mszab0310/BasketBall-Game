@@ -27,6 +27,7 @@ public class Ball : MonoBehaviour
     private bool _wasAbove;
     private bool _isChild;
     private int _collisionCount;
+    private Vector2 _dir;
 
     private void Awake()
     {
@@ -132,6 +133,7 @@ public class Ball : MonoBehaviour
 
     public void LaunchBall(Vector2 direction, float launchForce, int index, bool isChild)
     {
+        _dir = direction;
         _collisionCount = 0; 
         _isChild = isChild;
         _index = index;
@@ -204,6 +206,29 @@ public class Ball : MonoBehaviour
         float step = 100f / (upperBound - lowerBound);
         float score = 100f - (_collisionCount - lowerBound) * step;
         return score;
+    }
+
+
+    private float positiveCollisionFitness()
+    {
+        //0.2f * collisionScore + 0.2*positiveDir + 0.3*didSCore + 0.15*_wasAbove + 0.15*accuracy
+        float accuracy = 0f;
+        accuracy = 100 - _minDistanceFromHoop / _distanceLeftToHoop * 100;
+        int scored = didScore ? 100 : 0;
+        int above = _wasAbove ? 100 : 0;
+        int dir = 0;
+        if(_dir.x > 0 && _dir.y > 0)
+        {
+            dir = 100;
+        }
+        else
+        {
+            if(_dir.x > 0 || _dir.y > 0)
+            {
+                dir = 50;
+            }
+        }
+        return (float)(getCollisionScore() * 0.2f + 0.2f * dir+ 0.3f * scored + 0.15 * above + 0.15 * accuracy);
     }
 
     public float GetFitness()

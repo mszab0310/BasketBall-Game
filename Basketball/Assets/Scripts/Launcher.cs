@@ -83,11 +83,11 @@ public class Launcher : MonoBehaviour
         ChildScore.scoreValue = 0;
         for(int i = 0; i < bestIndividuals.Count; i++)
         {
-           /* if(i != 0 && !bestIndividuals[i].Equals(bestIndividuals[i - 1]))
-            {*/
+           if(i != 0 && !bestIndividuals[i].Equals(bestIndividuals[i - 1]))
+            {
                 ballFactoryScript.LaunchBall(bestIndividuals[i]);
                 yield return new WaitForSeconds(7.6f);
-           // }
+           }
         }        
         Debug.Log("-------------");
     }

@@ -166,11 +166,12 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -11.305938, y: 7.2032924}
-  - {x: 11.285609, y: 7.227994}
-  - {x: 11.310048, y: -4.9711523}
-  - {x: -11.303171, y: -4.970548}
-  - {x: -11.266497, y: 7.2028785}
+  - {x: -12.392584, y: 7.2032924}
+  - {x: 12.3334465, y: 7.2668033}
+  - {x: 12.357886, y: -4.9323435}
+  - {x: -12.312199, y: -5.048166}
+  - {x: -12.42595, y: 6.9665065}
+  - {x: -12.43076, y: 7.47454}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
@@ -357,10 +358,10 @@ RectTransform:
   m_Father: {fileID: 940547563}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 371.41, y: -175}
-  m_SizeDelta: {x: 202.82, y: 44.27}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 371.41, y: 42}
+  m_SizeDelta: {x: 202.82, y: 44.26999}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &541648037
 MonoBehaviour:
@@ -473,7 +474,7 @@ SpriteRenderer:
   m_SortingLayerID: 391575419
   m_SortingLayer: -1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d1f850b1d5649c24a99effc4d773a99b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 883b039c151f72f44b668a7c3110f89d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -492,8 +493,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 613559621}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.12, y: 0.83, z: 0}
-  m_LocalScale: {x: 1.7761443, y: 1.0632466, z: 1}
+  m_LocalPosition: {x: -0.2612, y: -0.4609, z: 0}
+  m_LocalScale: {x: 1.5580829, y: 1.3022645, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -532,10 +533,10 @@ RectTransform:
   m_Father: {fileID: 940547563}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -420, y: -181}
-  m_SizeDelta: {x: 145.21, y: 32.3}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: -420, y: 46}
+  m_SizeDelta: {x: 145.21, y: 32.299988}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &819556350
 MonoBehaviour:
@@ -1107,9 +1108,9 @@ RectTransform:
   m_Father: {fileID: 940547563}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -251, y: -182}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: -251, y: 46}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1309872430
@@ -1509,18 +1510,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.09900755}
+  m_Offset: {x: 0, y: -0.01754561}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 10.24, y: 2.1}
+    oldSize: {x: 10.24, y: 0.86}
     newSize: {x: 64.45401, y: 2.1}
     adaptiveTilingThreshold: 0.5
-    drawMode: 2
+    drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 1
   serializedVersion: 2
-  m_Size: {x: 10.24, y: 1.9019848}
+  m_Size: {x: 10.24, y: 0.88000816}
   m_EdgeRadius: 0
 --- !u!212 &1896514979
 SpriteRenderer:
@@ -1562,11 +1563,11 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 2254ff7c0f90a9a49a2fd06d5c77a04d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1d09cfb49e8b34547ad4fdfeea934083, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 2
+  m_DrawMode: 0
   m_Size: {x: 64.45401, y: 2.1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
@@ -1581,8 +1582,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1896514977}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.1343, y: -4.37, z: 0}
-  m_LocalScale: {x: 1.086594, y: 0.9319, z: 1}
+  m_LocalPosition: {x: -0.2529, y: -4.4799, z: 0}
+  m_LocalScale: {x: 2.9270191, y: 2.5311162, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
