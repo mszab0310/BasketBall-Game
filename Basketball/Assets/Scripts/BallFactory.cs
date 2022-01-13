@@ -61,8 +61,6 @@ public class BallFactory : MonoBehaviour
         for(int i = 0;i < populationSize; i++)
         {
             population[i].setFitness(ballscripts[i].GetFitness());
-            Debug.Log(population[i].getFitness() + " <> " + i);
-            
         }
     }
 }

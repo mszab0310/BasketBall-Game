@@ -233,7 +233,7 @@ public class Ball : MonoBehaviour
 
     public float GetFitness()
     {
-        return this.percentageFitness();
+        return this.positiveCollisionFitness();
     }
 
 }
