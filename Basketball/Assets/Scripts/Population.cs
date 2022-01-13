@@ -82,8 +82,8 @@ public class Population
     {
         //Children will have a 25% chance of mutation
         //if the will mutate, the will have a 25% chance on each genome to mutate
-        float mutationChance = 0.25f;
-        float genomeChance = 0.25f;
+        float mutationChance = 0.05f;
+        float genomeChance = 0.05f;
         float mutate = Random.Range(0f, 1f);
         foreach (Individual child in children)
         {

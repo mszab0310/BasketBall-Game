@@ -22,5 +22,5 @@ if __name__ == '__main__':
     folder_name = path
     for f_name in filter(lambda x: x.endswith(".txt"), os.listdir(folder_name)):
         plot_data(os.path.join(folder_name, f_name))
-    plt.savefig('positiveCollisionFitness')
+    plt.savefig('collisionFitnessLowerMutation')
     plt.show()
