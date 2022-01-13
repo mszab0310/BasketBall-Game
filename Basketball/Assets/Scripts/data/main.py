@@ -2,6 +2,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 import os
+import pathlib
 
 
 def plot_data(file_name):
@@ -17,7 +18,9 @@ def plot_data(file_name):
 
 
 if __name__ == '__main__':
-    folder_name = "E:\BasketBall Game\Basketball\Assets\Scripts\data"
+    path = pathlib.Path().absolute()
+    print(path)
+    folder_name = path
     for f_name in filter(lambda x: x.endswith(".txt"), os.listdir(folder_name)):
         plot_data(os.path.join(folder_name, f_name))
     plt.show()
