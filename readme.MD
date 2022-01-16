@@ -21,7 +21,7 @@ Collision fitness with 5% chance of mutation
 ![](collisionFitnessLowerMutation.png)
 
 A more restrictive collision fitness with 25% chance of mutation  
-![](poisitiveCollisionFitness.png)
+![](positiveCollisionFitness.png)
 
 A more restrictive collision fitness with 5% chance of mutation  
 ![](positiveCollisionFitnessLowerMutation.png)
