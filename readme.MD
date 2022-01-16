@@ -7,3 +7,5 @@ A simple 2D basketball game where the only challenge for the regular player is t
 ## Self learning with a genetic algorithm
 
 If you got tired of being bad at the game, no worries, there is a solution for the computer to play with itself ( ͡° ͜ʖ ͡°). Using a parameterized genetic algorithm by the launch force and direction of the basketball, the algorithm will find the perfect pairing to score a point and to be better than you.
+
+![](basket.mp4)
