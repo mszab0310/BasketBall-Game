@@ -14,7 +14,7 @@ If you got tired of being bad at the game, no worries, there is a solution for t
 
 Having played around with four types of fitnesses (so far) all of them being more restrictive than the other, we've got some intersting results of the evolution of the fitness varying based on the impact of different evolutionary operators. Here you can see some of the fitnesses graphed for the same number of generations but with different mutation rates:
 
-Collision fitness \\
+Collision fitness  
 ![](collisionFitness.png)
 
 Collision fitness with lower mutation
