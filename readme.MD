@@ -10,4 +10,6 @@ If you got tired of being bad at the game, no worries, there is a solution for t
 
 ![](basket.gif)
 
-# How
+# Technical details
+
+If you want to try this project on your PC you will need to have [Unity 2020.3.21f1](https://unity3d.com/get-unity/download?thank-you=update&download_nid=65278&os=Win) installed on your PC and any version of Visual Studio.
