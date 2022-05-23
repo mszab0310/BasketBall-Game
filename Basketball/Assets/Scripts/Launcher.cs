@@ -37,7 +37,7 @@ public class Launcher : MonoBehaviour
 
     private IEnumerator Simulate()
     {
-        for (int i = 0; i < 125; i++)
+        for (int i = 0; i < 50; i++)
         {
             ScoreScript.scoreValue = 0;
             WriteAllToFile();
@@ -73,12 +73,23 @@ public class Launcher : MonoBehaviour
        // bestIndividuals.Clear();
     }
 
+    public void SetTimescaleLow()
+    {
+        ballFactoryScript.setTimeScale(1.5f);
+    }
+
+    public void SetTimescaleHigh()
+    {
+        ballFactoryScript.setTimeScale(100);
+    }
+
     private IEnumerator SimulateTopTen()
     {
         
         Debug.Log("--------TOP---10-----");
         Debug.Log(Time.timeScale  + " - " + bestIndividuals.Count);
         ballFactoryScript.setTimeScale(1f);
+        Debug.Log(Time.timeScale + " - " + bestIndividuals.Count);
         ScoreScript.scoreValue = 0;
         ChildScore.scoreValue = 0;
         for(int i = 0; i < bestIndividuals.Count; i++)
